@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payroll - PayrollPro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; }
+        .navbar {
+            background: #1e3c72; color: white;
+            padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .navbar h2 { font-size: 20px; }
+        .nav-links a {
+            color: white; text-decoration: none;
+            margin-left: 25px; font-size: 14px;
+            padding: 6px 12px; border-radius: 6px;
+        }
+        .nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.25); }
+        .main { padding: 30px; }
+        .page-title { font-size: 22px; color: #333; font-weight: 600; margin-bottom: 25px; }
+
+        .process-card {
+            background: white; border-radius: 12px;
+            padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .process-card h3 { color: #1e3c72; margin-bottom: 20px; font-size: 16px; }
+        .process-row { display: flex; gap: 15px; align-items: flex-end; }
+        .form-group { flex: 1; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; color: #555; }
+        .form-group select, .form-group input {
+            width: 100%; padding: 10px 12px;
+            border: 2px solid #e0e0e0; border-radius: 8px;
+            font-size: 13px; outline: none;
+        }
+        .form-group select:focus { border-color: #1e3c72; }
+        .btn {
+            padding: 10px 25px; border: none;
+            border-radius: 8px; cursor: pointer;
+            font-size: 14px; font-weight: 600;
+        }
+        .btn-primary { background: #1e3c72; color: white; height: 42px; }
+        .btn-primary:hover { background: #2a5298; }
+
+        .result-msg {
+            margin-top: 15px; padding: 12px;
+            border-radius: 8px; font-size: 14px;
+            display: none;
+        }
+        .result-success { background: #e8f5e9; color: #2e7d32; display: block; }
+        .result-error { background: #ffebee; color: #c62828; display: block; }
+
+        .table-section {
+            background: white; border-radius: 12px;
+            padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .table-header {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            background: #f8f9fa; padding: 12px 15px;
+            text-align: left; font-size: 13px;
+            color: #666; font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+        td { padding: 12px 15px; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
+        .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .badge-paid { background: #e8f5e9; color: #2e7d32; }
+        .badge-pending { background: #fff3e0; color: #e65100; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>💼 PayrollPro</h2>
+    <div class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="employees.html">Employees</a>
+        <a href="payroll.html" class="active">Payroll</a>
+        <a href="index.html">Logout</a>
+    </div>
+</div>
+
+<div class="main">
+    <div class="page-title">Payroll Management</div>
+
+    <!-- Process Payroll -->
+    <div class="process-card">
+        <h3>⚙️ Process Monthly Payroll</h3>
+        <div class="process-row">
+            <div class="form-group">
+                <label>Select Month</label>
+                <select id="selMonth">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5" selected>May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Select Year</label>
+                <select id="selYear">
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026" selected>2026</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="processPayroll()">
+                ▶ Process Payroll
+            </button>
+            <button class="btn btn-primary" onclick="viewPayroll()" style="background:#388e3c">
+                👁 View Records
+            </button>
+        </div>
+        <div class="result-msg" id="resultMsg"></div>
+    </div>
+
+    <!-- Payroll Records Table -->
+    <div class="table-section">
+        <div class="table-header">
+            <h3 style="color:#1e3c72;font-size:16px">📋 Payroll Records</h3>
+            <span style="font-size:13px;color:#888" id="recordCount"></span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Department</th>
+                    <th>Month/Year</th>
+                    <th>Gross Pay</th>
+                    <th>Deductions</th>
+                    <th>Net Pay</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="payrollTable">
+                <tr><td colspan="7" style="text-align:center;color:#aaa">
+                    Select month and year, then click View Records
+                </td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const BASE_URL = 'http://localhost:9090';
+
+    async function processPayroll() {
+        const month = document.getElementById('selMonth').value;
+        const year = document.getElementById('selYear').value;
+        const msgEl = document.getElementById('resultMsg');
+
+        try {
+            const res = await fetch(`${BASE_URL}/api/payroll/process/${month}/${year}`, {
+                method: 'POST'
+            });
+            const msg = await res.text();
+            msgEl.textContent = '✅ ' + msg;
+            msgEl.className = 'result-msg result-success';
+            viewPayroll();
+        } catch (err) {
+            msgEl.textContent = '❌ Cannot connect to server!';
+            msgEl.className = 'result-msg result-error';
+        }
+    }
+
+    async function viewPayroll() {
+        const month = document.getElementById('selMonth').value;
+        const year = document.getElementById('selYear').value;
+
+        try {
+            const res = await fetch(`${BASE_URL}/api/payroll/${month}/${year}`);
+            const records = await res.json();
+            const tbody = document.getElementById('payrollTable');
+            document.getElementById('recordCount').textContent = `${records.length} records found`;
+
+            if (records.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#aaa">No payroll records found. Process payroll first.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = records.map(r => `
+                <tr>
+                    <td><strong>${r.employee ? r.employee.name : '-'}</strong></td>
+                    <td>${r.employee ? (r.employee.department || '-') : '-'}</td>
+                    <td>${getMonthName(r.month)} ${r.year}</td>
+                    <td>₹${(r.grossPay || 0).toLocaleString('en-IN', {maximumFractionDigits: 2})}</td>
+                    <td>₹${(r.totalDeductions || 0).toLocaleString('en-IN', {maximumFractionDigits: 2})}</td>
+                    <td><strong>₹${(r.netPay || 0).toLocaleString('en-IN', {maximumFractionDigits: 2})}</strong></td>
+                    <td><span class="badge ${r.status === 'PAID' ? 'badge-paid' : 'badge-pending'}">${r.status}</span></td>
+                </tr>
+            `).join('');
+        } catch (err) {
+            document.getElementById('payrollTable').innerHTML =
+                '<tr><td colspan="7" style="text-align:center;color:red">Cannot connect to server!</td></tr>';
+        }
+    }
+
+    function getMonthName(num) {
+        const months = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return months[num] || '';
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - PayrollPro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; }
+
+        /* Navbar */
+        .navbar {
+            background: #1e3c72;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .navbar h2 { font-size: 20px; }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover { background: rgba(255,255,255,0.2); }
+        .nav-links a.active { background: rgba(255,255,255,0.25); }
+        .user-info { font-size: 13px; color: #ccc; }
+
+        /* Main */
+        .main { padding: 30px; }
+        .page-title { font-size: 22px; color: #333; margin-bottom: 25px; font-weight: 600; }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .stat-icon {
+            width: 55px; height: 55px;
+            border-radius: 12px;
+            display: flex; align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .stat-info h3 { font-size: 28px; color: #333; font-weight: 700; }
+        .stat-info p { font-size: 13px; color: #888; margin-top: 3px; }
+        .blue { background: #e8f0fe; }
+        .green { background: #e8f5e9; }
+        .orange { background: #fff3e0; }
+        .purple { background: #f3e5f5; }
+
+        /* Quick Actions */
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .action-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .action-card .icon { font-size: 32px; margin-bottom: 10px; }
+        .action-card h4 { font-size: 14px; font-weight: 600; }
+        .action-card p { font-size: 12px; color: #888; margin-top: 4px; }
+
+        /* Recent Table */
+        .table-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+        td {
+            padding: 12px 15px;
+            font-size: 13px;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        tr:hover td { background: #fafafa; }
+        .badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-active { background: #e8f5e9; color: #2e7d32; }
+        .badge-inactive { background: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>💼 EmployeePayrollManagementSystem</h2>
+    <div class="nav-links">
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="employees.html">Employees</a>
+        <a href="payroll.html">Payroll</a>
+        <a href="index.html">Logout</a>
+    </div>
+    <div class="user-info" id="userInfo">Welcome, Admin</div>
+</div>
+
+<div class="main">
+    <div class="page-title">Dashboard Overview</div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue">👥</div>
+            <div class="stat-info">
+                <h3 id="totalEmp">0</h3>
+                <p>Total Employees</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div class="stat-info">
+                <h3 id="activeEmp">0</h3>
+                <p>Active Employees</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">💰</div>
+            <div class="stat-info">
+                <h3 id="totalSalary">₹0</h3>
+                <p>Monthly Salary</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon purple">📋</div>
+            <div class="stat-info">
+                <h3 id="deptCount">0</h3>
+                <p>Departments</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">Quick Actions</div>
+    <div class="actions-grid">
+        <a href="employees.html" class="action-card">
+            <div class="icon">➕</div>
+            <h4>Add Employee</h4>
+            <p>Add new employee to system</p>
+        </a>
+        <a href="payroll.html" class="action-card">
+            <div class="icon">💳</div>
+            <h4>Process Payroll</h4>
+            <p>Run monthly payroll</p>
+        </a>
+        <a href="employees.html" class="action-card">
+            <div class="icon">📊</div>
+            <h4>View Reports</h4>
+            <p>Employee salary reports</p>
+        </a>
+    </div>
+
+    <div class="table-section">
+        <div class="section-title">Recent Employees</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Basic Salary</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable">
+                <tr><td colspan="6" style="text-align:center;color:#aaa">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const BASE_URL = 'http://localhost:9090';
+
+    window.onload = function() {
+        const username = localStorage.getItem('username') || 'Admin';
+        document.getElementById('userInfo').textContent = 'Welcome, ' + username;
+        loadDashboard();
+    }
+
+    async function loadDashboard() {
+        try {
+            const res = await fetch(`${BASE_URL}/api/employees`);
+            const employees = await res.json();
+
+            document.getElementById('totalEmp').textContent = employees.length;
+
+            const active = employees.filter(e => e.status === 'ACTIVE');
+            document.getElementById('activeEmp').textContent = active.length;
+
+            const totalSalary = employees.reduce((sum, e) => sum + (e.basicSalary || 0), 0);
+            document.getElementById('totalSalary').textContent = '₹' + totalSalary.toLocaleString('en-IN');
+
+            const depts = [...new Set(employees.map(e => e.department).filter(Boolean))];
+            document.getElementById('deptCount').textContent = depts.length;
+
+            const tbody = document.getElementById('employeeTable');
+            if (employees.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#aaa">No employees found. Add employees first.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = employees.slice(0, 10).map(emp => `
+                <tr>
+                    <td>${emp.id}</td>
+                    <td><strong>${emp.name}</strong></td>
+                    <td>${emp.department || '-'}</td>
+                    <td>${emp.designation || '-'}</td>
+                    <td>₹${(emp.basicSalary || 0).toLocaleString('en-IN')}</td>
+                    <td><span class="badge ${emp.status === 'ACTIVE' ? 'badge-active' : 'badge-inactive'}">${emp.status}</span></td>
+                </tr>
+            `).join('');
+
+        } catch (error) {
+            document.getElementById('employeeTable').innerHTML =
+                '<tr><td colspan="6" style="text-align:center;color:red">Could not connect to server. Make sure Spring Boot is running on port 9090.</td></tr>';
+        }
+    }
+</script>
+</body>
+</html>
