@@ -114,6 +114,8 @@ Employee-PayrollManagement-System
 
 ## Application Screenshots
 
+https://github.com/jagadeeshvempuluru/Employee-PayrollManagement-System/blob/main/springbootdemo/screenshots/loginpage.png.png?raw=true
+
 ### Dashboard Overview
 
 The dashboard provides a quick summary of employees, salary budget, departments, and payroll-related activities.
