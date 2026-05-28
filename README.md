@@ -118,7 +118,8 @@ Employee-PayrollManagement-System
 
 The dashboard provides a quick summary of employees, salary budget, departments, and payroll-related activities.
 
-![Dashboard](screenshots/dashboard.png)
+<img width="1880" height="919" alt="image" src="https://github.com/user-attachments/assets/ae1303b7-ff45-43d5-9f06-86bdd05d6802" />
+
 
 ### Employee Management
 
