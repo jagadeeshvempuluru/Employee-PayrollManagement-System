@@ -1,108 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayrollPro - Login</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #1e3c72;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            width: 380px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .logo h1 { color: #1e3c72; font-size: 26px; }
-        .logo p { color: #888; font-size: 13px; margin-top: 5px; }
-        .form-group { margin-bottom: 20px; }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #444;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-        }
-        input:focus { border-color: #1e3c72; }
-        .btn {
-            width: 100%;
-            padding: 13px;
-            background: #1e3c72;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .btn:hover { background: #2a5298; }
-        .error {
-            color: red;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 12px;
-            display: none;
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #666;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayrollPro - Login</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    animation: float linear infinite;
+}
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+.login-wrapper {
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(40px);
+}
+@keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+.login-box {
+    background: rgba(255,255,255,0.97);
+    padding: 45px 40px;
+    border-radius: 20px;
+    width: 400px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+    animation: fadeIn 0.8s ease 0.3s forwards;
+    opacity: 0;
+}
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+.logo-icon {
+    width: 65px; height: 65px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 30px;
+    box-shadow: 0 8px 25px rgba(30,60,114,0.4);
+    animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(30,60,114,0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 12px 35px rgba(30,60,114,0.5); }
+}
+.logo h1 { color: #1e3c72; font-size: 26px; font-weight: 700; }
+.logo p { color: #888; font-size: 13px; margin-top: 5px; }
+.form-group {
+    margin-bottom: 22px;
+    animation: slideRight 0.6s ease forwards;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+.form-group:nth-child(1) { animation-delay: 0.4s; }
+.form-group:nth-child(2) { animation-delay: 0.5s; }
+.form-group:nth-child(3) { animation-delay: 0.6s; }
+@keyframes slideRight {
+    to { opacity: 1; transform: translateX(0); }
+}
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+}
+.input-wrapper {
+    position: relative;
+}
+.input-icon {
+    position: absolute;
+    left: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+    transition: color 0.3s;
+}
+input {
+    width: 100%;
+    padding: 13px 14px 13px 42px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+input:focus {
+    border-color: #1e3c72;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(30,60,114,0.1);
+}
+input:focus + .input-icon { color: #1e3c72; }
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 5px;
+}
+.btn-login::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+.btn-login:hover::before { width: 300px; height: 300px; }
+.btn-login:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(30,60,114,0.4); }
+.btn-login:active { transform: translateY(0); }
+.btn-login.loading { pointer-events: none; opacity: 0.8; }
+.spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.error-msg {
+    background: #fff0f0;
+    color: #e53935;
+    border: 1px solid #ffcdd2;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 14px;
+    display: none;
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+.success-msg {
+    background: #f0fff4;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 14px;
+    display: none;
+}
+</style>
 </head>
 <body>
-<div class="login-box">
-    <div class="logo">
-        <h1>💼 PayrollPro</h1>
-        <p>Employee Payroll Management System</p>
-    </div>
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" id="username" placeholder="Enter username" />
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="Enter password" />
-    </div>
-    <button class="btn" onclick="login()">Login</button>
-    <div class="error" id="errorMsg">Invalid username or password!</div>
-    <div class="register-link">
-        New user? Register via Postman API
+
+<div class="particles" id="particles"></div>
+
+<div class="login-wrapper">
+    <div class="login-box">
+        <div class="logo">
+            <div class="logo-icon">💼</div>
+            <h1>PayrollPro</h1>
+            <p>Employee Payroll Management System</p>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <div class="input-wrapper">
+                <input type="text" id="username" placeholder="Enter your username" />
+                <span class="input-icon">👤</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <input type="password" id="password" placeholder="Enter your password" />
+                <span class="input-icon">🔒</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn-login" id="loginBtn" onclick="login()">
+                <span id="btnText">Login</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+            <div class="error-msg" id="errorMsg"></div>
+            <div class="success-msg" id="successMsg">Login successful! Redirecting...</div>
+        </div>
     </div>
 </div>
 
 <script>
 const BASE_URL = 'http://localhost:9090';
 
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 30 + 10;
+        p.style.cssText = `
+            width: ${size}px; height: ${size}px;
+            left: ${Math.random() * 100}%;
+            animation-duration: ${Math.random() * 15 + 10}s;
+            animation-delay: ${Math.random() * 10}s;
+        `;
+        container.appendChild(p);
+    }
+}
+createParticles();
+
+document.addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
+
 async function login() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
+    const btn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
 
     if (!username || !password) {
-        showError('Please enter username and password!');
+        showError('Please enter both username and password!');
         return;
     }
+
+    btn.classList.add('loading');
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
 
     try {
         const response = await fetch(`${BASE_URL}/api/auth/login`, {
@@ -115,20 +290,25 @@ async function login() {
             const data = await response.json();
             localStorage.setItem('username', data.username);
             localStorage.setItem('role', data.role);
-            window.location.href = 'dashboard.html';
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
         } else {
+            btn.classList.remove('loading');
+            btnText.style.display = 'block';
+            spinner.style.display = 'none';
             showError('Invalid username or password!');
         }
     } catch (error) {
         localStorage.setItem('username', username);
         localStorage.setItem('role', 'ADMIN');
-        window.location.href = 'dashboard.html';
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1000);
     }
 }
-
-document.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') login();
-});
 
 function showError(msg) {
     const el = document.getElementById('errorMsg');
