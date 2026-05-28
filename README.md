@@ -114,7 +114,10 @@ Employee-PayrollManagement-System
 
 ## Application Screenshots
 
-https://github.com/jagadeeshvempuluru/Employee-PayrollManagement-System/blob/main/springbootdemo/screenshots/loginpage.png.png?raw=true
+### Login Page
+
+The application provides a secure login interface for user authentication before accessing the dashboard.
+![Login](screenshots/login.png)
 
 ### Dashboard Overview
 
