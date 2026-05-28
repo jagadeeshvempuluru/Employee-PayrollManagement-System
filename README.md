@@ -130,19 +130,19 @@ The dashboard provides a quick summary of employees, salary budget, departments,
 
 Manage employee records with Add, View, Update, and Delete operations.
 
-![Employees](screenshots/employees.png)
+<img width="1899" height="918" alt="image" src="https://github.com/user-attachments/assets/f5384366-8913-4475-8a12-00e787f7cf58" />
+
 
 ### Payroll Management
 
 Process salaries and maintain payroll records efficiently.
 
-![Payroll](screenshots/payroll.png)
+<img width="1900" height="523" alt="payrollManagement png" src="https://github.com/user-attachments/assets/e6d3f54b-8863-4602-879c-399f0a126c3c" />
+
 
 ### API Testing using Postman
 
-REST APIs tested successfully using Postman.
-
-![Postman Testing](screenshots/postman-testing.png)
+REST APIs tested successfully using Postman
 
 ---
 
