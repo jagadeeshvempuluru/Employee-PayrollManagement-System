@@ -117,7 +117,8 @@ Employee-PayrollManagement-System
 ### Login Page
 
 The application provides a secure login interface for user authentication before accessing the dashboard.
-![Login](screenshots/login.png)
+<img width="1868" height="878" alt="image" src="https://github.com/user-attachments/assets/fc97c23e-344a-4620-b2cc-6766cde6a3ce" />
+
 
 ### Dashboard Overview
 
