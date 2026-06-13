@@ -1,2 +1,8 @@
-/mvnw text eol=lf
-*.cmd text eol=crlf
+# Auto detect text files and perform LF normalization 
+* text=auto 
+*.java linguist-language=Java 
+*.html linguist-detectable=true 
+*.css linguist-detectable=true 
+*.xml linguist-detectable=false 
+*.properties linguist-detectable=false 
+target/ linguist-vendored=true 
